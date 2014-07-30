@@ -1,215 +1,218 @@
-define(function(require, exports, module) {
-	var fileInfo = {};
+define(function (require, exports, module) {
+    var fileInfo = {};
 
-	function addIcon(extension, icon, color, size) {
-		fileInfo[extension] = {
-			icon: icon,
-			color: color,
-			size: size
-		};
-	}
-	function addAlias(extension, other) {
-		fileInfo[extension] = fileInfo[other];
-	}
-	function getDefaultIcon(extension) {
-		if (extension === '') {
-			return {
-				color: '#94a3a7',
-				icon: '\uf011'
-			};
-		}
+    function addIcon(extension, icon, color, size) {
+        fileInfo[extension] = {
+            icon: icon,
+            color: color,
+            size: size
+        };
+    }
 
-		var hue = 0;
-		var saturnation = 90;
-		var lightness = 50;
+    function addAlias(extension, other) {
+        fileInfo[extension] = fileInfo[other];
+    }
 
-		for (var i = 0; i < extension.length; ++i) {
-			hue += extension.charCodeAt(i) * 42 * (i + 2);
-			hue %= 256;
-			saturnation = (saturnation + (extension.charCodeAt(i) % 30) + 70) / 2;
-			lightness = (lightness + (extension.charCodeAt(i) * 3 % 40) + 30) / 2;
-		}
+    function getDefaultIcon(extension) {
+        if (extension === '') {
+            return {
+                color: '#94a3a7',
+                icon: '\uf011'
+            };
+        }
 
-		return {
-			color: 'hsl(' + Math.round(hue) + ', ' + Math.round(saturnation) + '%, ' + Math.round(lightness) + '%)',
-			icon: '\uf12f'
-		};
-	}
+        var hue = 0,
+            saturnation = 90,
+            lightness = 50;
 
-	// XML
-	addIcon('xml',    '\uf05f', '#ff6600');
-	addIcon('html',   '\uf13b', '#d28445');
-    	addAlias('htm',   'html');
+        for (var i = 0; i < extension.length; ++i) {
+            hue += extension.charCodeAt(i) * 42 * (i + 2);
+            hue %= 256;
+            saturnation = (saturnation + (extension.charCodeAt(i) % 30) + 70) / 2;
+            lightness = (lightness + (extension.charCodeAt(i) * 3 % 40) + 30) / 2;
+        }
 
-	// Stylesheets
-	addIcon('css',    '\uf13c', '#6a9fb5');
-	addIcon('scss',   '\uf13c', '#c6538c');
-	addAlias('sass',  'scss');
-	addIcon('less',   '\uf13c', '#3b6bb2');
-	addIcon('styl',   '\uf13c', '#b3d107');
+        return {
+            color: 'hsl(' + Math.round(hue) + ', ' + Math.round(saturnation) + '%, ' + Math.round(lightness) + '%)',
+            icon: '\uf12f'
+        };
+    }
 
-	// JavaScript
-	addIcon('js',     '\ue097', '#f4bf75');
-	addIcon('ejs',     '\uf05f', '#f4bf75');
-	addIcon('ts',     '\uf05f', '#0074c1');
-	addIcon('coffee', '\ue0b3', '#c9905e');
-	addIcon('json',   '\uf096', '#F4BF75');
-	addIcon('ls',     '\uf269', '#369bd7');
+    // XML
+    addIcon('xml', '\uf05f', '#ff6600');
+    addIcon('html', '\uf13b', '#d28445');
+    addAlias('htm', 'html');
 
-	// Server side
-	addIcon('php',    '\ue09a', '#6976c3');
-	addIcon('sql',    '\uf096', '#c67f07');
+    // Stylesheets
+    addIcon('css', '\uf13c', '#6a9fb5');
+    addIcon('scss', '\uf13c', '#c6538c');
+    addAlias('sass', 'scss');
+    addIcon('less', '\uf13c', '#3b6bb2');
+    addIcon('styl', '\uf13c', '#b3d107');
 
-	// Java
-	addIcon('java',   '\ue098', '#75b4de');
-	addAlias('class', 'java');
+    // JavaScript
+    addIcon('js', '\ue097', '#f4bf75');
+    addIcon('ejs', '\uf05f', '#f4bf75');
+    addIcon('ts', '\uf05f', '#0074c1');
+    addIcon('coffee', '\ue0b3', '#c9905e');
+    addIcon('json', '\uf096', '#F4BF75');
+    addIcon('ls', '\uf269', '#369bd7');
 
-	// Shell and friends
-	addIcon('sh',     '\ue0b7');
-	addIcon('bat',    '\ue0b7');
-	addIcon('command','\ue0b7');
+    // Server side
+    addIcon('php', '\ue09a', '#6976c3');
+    addIcon('sql', '\uf096', '#c67f07');
 
-	// Templating
-	addIcon('jade',   '\uf13b', '#01dfa5');
+    // Java
+    addIcon('java', '\ue098', '#75b4de');
+    addAlias('class', 'java');
 
-	// Images
-	addIcon('png',    '\uf012', '#dbb1a9');
-	addIcon('jpg',    '\uf012', '#dedfa3');
-	addAlias('jpeg',  'jpg');
-	addIcon('tiff',   '\uf012', '#ff4000');
-	addIcon('ico',    '\uf012', '#b6d2d1');
-	addIcon('svg',    '\uf012', '#c0c5eb');
+    // Shell and friends
+    addIcon('sh', '\ue0b7');
+    addIcon('bat', '\ue0b7');
+    addIcon('command', '\ue0b7');
 
-	addIcon('gif',    '\uf012', '#aaecc0');
+    // Templating
+    addIcon('jade', '\uf13b', '#01dfa5');
 
-	// Videos
-	addIcon('mp4',    '\uf094');
-	addAlias('webm',  'mp4');
-	addAlias('ogg',   'mp4');
+    // Images
+    addIcon('png', '\uf012', '#dbb1a9');
+    addIcon('jpg', '\uf012', '#dedfa3');
+    addAlias('jpeg', 'jpg');
+    addIcon('tiff', '\uf012', '#ff4000');
+    addIcon('ico', '\uf012', '#b6d2d1');
+    addIcon('svg', '\uf012', '#c0c5eb');
 
-	// Audio
-	addIcon('mp3',    '\uf094');
-	addAlias('wav',   'mp3');
+    addIcon('gif', '\uf012', '#aaecc0');
 
-	// Fonts
-	addIcon('ttf',    '\uf094');
-	addIcon('eot',    '\uf094');
-	addIcon('woff',    '\uf094');
+    // Videos
+    addIcon('mp4', '\uf094');
+    addAlias('webm', 'mp4');
+    addAlias('ogg', 'mp4');
 
-	// Readme
-	addIcon('md', '\uf0c9', '#c36b35');
-	addAlias('markdown', 'md');
+    // Audio
+    addIcon('mp3', '\uf094');
+    addAlias('wav', 'mp3');
 
-	// Git
-	addIcon('gitignore', '\uf084', '#a0422e', 18);
-	addIcon('gitmodules', '\uf020');
-	addIcon('gitattributes', '\uf020');
+    // Fonts
+    addIcon('ttf', '\uf094');
+    addIcon('eot', '\uf094');
+    addIcon('woff', '\uf094');
 
-	// Webservers
-	addIcon('htaccess', '\uf02f');
-	addIcon('htpasswd', '\uf02f');
-	addIcon('conf',   '\uf02f');
+    // Readme
+    addIcon('md', '\uf0c9', '#c36b35');
+    addAlias('markdown', 'md');
 
-	// Archive
-	addIcon('zip',    '\uf013');
-	addIcon('rar',    '\uf013');
-	addIcon('7z',     '\uf013');
-	addIcon('tgz',    '\uf013');
-	addIcon('tar',    '\uf013');
-	addIcon('gz',     '\uf013');
-	addIcon('bzip',   '\uf013');
+    // Git
+    addIcon('gitignore', '\uf084', '#a0422e', 18);
+    addIcon('gitmodules', '\uf020');
+    addIcon('gitattributes', '\uf020');
 
-	// Settings
-	addIcon('project', '\uf013');
-	addAlias('jscsrc', 'project');
-	addAlias('jshintrc', 'project');
-	addAlias('csslintrc', 'project');
-	addAlias('todo', 'project');
-	addAlias('classpath', 'project');
+    // Webservers
+    addIcon('htaccess', '\uf02f');
+    addIcon('htpasswd', '\uf02f');
+    addIcon('conf', '\uf02f');
 
-	// Other text files
-	addIcon('txt',    '\uf011');
-	addIcon('log',    '\uf011');
-	addIcon('npmignore', '\uf084', '#a0422e', 18);
-	addIcon('yml',   '\uf011');
-	addIcon('ls', '\uf011');
-	addIcon('org', '\uf011');
+    // Archive
+    addIcon('zip', '\uf013');
+    addIcon('rar', '\uf013');
+    addIcon('7z', '\uf013');
+    addIcon('tgz', '\uf013');
+    addIcon('tar', '\uf013');
+    addIcon('gz', '\uf013');
+    addIcon('bzip', '\uf013');
 
-	var ProjectManager = brackets.getModule('project/ProjectManager');
-	var DocumentManager = brackets.getModule('document/DocumentManager');
-	var ExtensionUtils = brackets.getModule("utils/ExtensionUtils");
+    // Settings
+    addIcon('project', '\uf013');
+    addAlias('jscsrc', 'project');
+    addAlias('jshintrc', 'project');
+    addAlias('csslintrc', 'project');
+    addAlias('todo', 'project');
+    addAlias('classpath', 'project');
 
-	ExtensionUtils.loadStyleSheet(module, "styles/style.css");
+    // Other text files
+    addIcon('txt', '\uf011');
+    addIcon('log', '\uf011');
+    addIcon('npmignore', '\uf084', '#a0422e', 18);
+    addIcon('yml', '\uf011');
+    addIcon('ls', '\uf011');
+    addIcon('org', '\uf011');
 
-	function renderFiles() {
-		$('#project-files-container ul').removeClass('jstree-no-icons').addClass('jstree-icons');
+    var ProjectManager = brackets.getModule('project/ProjectManager');
+    var DocumentManager = brackets.getModule('document/DocumentManager');
+    var ExtensionUtils = brackets.getModule("utils/ExtensionUtils");
 
-		var $items = $('#project-files-container li>a');
+    ExtensionUtils.loadStyleSheet(module, "styles/style.css");
 
-		$items.each(function(index) {
-			var ext = ($(this).find('.extension').text() || $(this).text().substr(1) || '').substr(1).toLowerCase();
-			var lastIndex = ext.lastIndexOf('.');
-			if (lastIndex > 0) {
-				ext = ext.substr(lastIndex + 1);
-			}
-            
-			var data;
+    function renderFiles() {
+        $('#project-files-container ul').removeClass('jstree-no-icons').addClass('jstree-icons');
 
-			if ($(this).parent().hasClass('jstree-leaf')) {
-				data = fileInfo.hasOwnProperty(ext) ? fileInfo[ext] : getDefaultIcon(ext);
-			} else {
-				return;
-			}
+        var $items = $('#project-files-container li>a');
 
-			var $new = $(this).find('.jstree-icon');
-			$new.text(data.icon);
-			$new.addClass('file-icon');
-			$new.css({
-				color: data.color,
-				fontSize: (data.size || 16) + 'px'
-			});
-		});
-	}
-	function renderWorkingSet() {
-		$('#open-files-container li>a>.file-icon').remove();
+        $items.each(function (index) {
+            var ext = ($(this).find('.extension').text() || $(this).text().substr(1) || '').substr(1).toLowerCase();
+            var lastIndex = ext.lastIndexOf('.');
+            if (lastIndex > 0) {
+                ext = ext.substr(lastIndex + 1);
+            }
 
-		var $items = $('#open-files-container li>a');
+            var data;
 
-		$items.each(function(index) {
-			var ext = ($(this).find('.extension').text() || $(this).text() || '').substr(1).toLowerCase();
-			var lastIndex = ext.lastIndexOf('.');
-			if (lastIndex > 0) {
-				ext = ext.substr(lastIndex + 1);
-			}
+            if ($(this).parent().hasClass('jstree-leaf')) {
+                data = fileInfo.hasOwnProperty(ext) ? fileInfo[ext] : getDefaultIcon(ext);
+            } else {
+                return;
+            }
 
-			var data = fileInfo.hasOwnProperty(ext) ? fileInfo[ext] : getDefaultIcon(ext);
+            var $new = $(this).find('.jstree-icon');
+            $new.text(data.icon);
+            $new.addClass('file-icon');
+            $new.css({
+                color: data.color,
+                fontSize: (data.size || 16) + 'px'
+            });
+        });
+    }
 
-			var $new = $('<div>');
-			$new.text(data.icon);
-			$new.addClass('file-icon');
-			$new.css({
-				color: data.color,
-				fontSize: (data.size || 16) + 'px'
-			});
-			$(this).prepend($new);
-		});
-	}
+    function renderWorkingSet() {
+        $('#open-files-container li>a>.file-icon').remove();
 
-	function projectOpen() {
-		var events = 'load_node.jstree create_node.jstree set_text.jstree';
+        var $items = $('#open-files-container li>a');
 
-		renderFiles();
+        $items.each(function (index) {
+            var ext = ($(this).find('.extension').text() || $(this).text() || '').substr(1).toLowerCase();
+            var lastIndex = ext.lastIndexOf('.');
+            if (lastIndex > 0) {
+                ext = ext.substr(lastIndex + 1);
+            }
 
-		$('#project-files-container').off(events, renderFiles);
-		$('#project-files-container').on(events, renderFiles);
-	}
+            var data = fileInfo.hasOwnProperty(ext) ? fileInfo[ext] : getDefaultIcon(ext);
 
-	$(ProjectManager).on('projectOpen projectRefresh', projectOpen);
+            var $new = $('<div>');
+            $new.text(data.icon);
+            $new.addClass('file-icon');
+            $new.css({
+                color: data.color,
+                fontSize: (data.size || 16) + 'px'
+            });
+            $(this).prepend($new);
+        });
+    }
 
-	$(DocumentManager).on("workingSetAdd workingSetAddList workingSetRemove workingSetRemoveList fileNameChange pathDeleted workingSetSort", function() {
-		renderWorkingSet();
-	});
+    function projectOpen() {
+        var events = 'load_node.jstree create_node.jstree set_text.jstree';
 
-	projectOpen();
-	renderWorkingSet();
+        renderFiles();
+
+        $('#project-files-container').off(events, renderFiles);
+        $('#project-files-container').on(events, renderFiles);
+    }
+
+    $(ProjectManager).on('projectOpen projectRefresh', projectOpen);
+
+    $(DocumentManager).on("workingSetAdd workingSetAddList workingSetRemove workingSetRemoveList fileNameChange pathDeleted workingSetSort", function () {
+        renderWorkingSet();
+    });
+
+    projectOpen();
+    renderWorkingSet();
 });
