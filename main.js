@@ -66,6 +66,10 @@ define(function (require, exports, module) {
     addIcon('java', '\ue098', '#75b4de');
     addAlias('class', 'java');
 
+    // C++
+    addIcon('cpp', '\ue093', '#3b6bb2')
+    addAlias('cc', 'cpp')
+
     // Shell and friends
     addIcon('sh', '\ue0b7');
     addIcon('bat', '\ue0b7');
